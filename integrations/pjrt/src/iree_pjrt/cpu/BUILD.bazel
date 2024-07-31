@@ -1,0 +1,55 @@
+package(
+    default_visibility = ["//visibility:public"],
+    features = ["layering_check"],
+    licenses = ["notice"],  # Apache 2.0
+)
+
+cc_library(
+    name = "client",
+    hdrs = [ "client.h" ],
+    srcs = [ "client.cc" ],
+    deps = [
+        "//integrations/pjrt/src/iree_pjrt/common",
+        "//runtime/src/iree/hal/drivers/local_sync:sync_driver",
+        "//runtime/src/iree/hal/drivers/local_task:task_driver",
+        "//runtime/src/iree/hal/local",
+        "//runtime/src/iree/hal/local:executable_loader",
+        "//runtime/src/iree/hal/local/loaders/registration",
+        "//runtime/src/iree/hal/local/plugins/registration",
+        "//runtime/src/iree/task:api",
+    ],
+)
+
+cc_library(
+    name = "dylib",
+    srcs = [ "dylib_entry_point.cc" ],
+    # linkopts = [
+    #     #"-Wl,--version-script,$(location :kelvin_pjrt_api_version_script.ld>
+    #     "-Wl,--no-undefined",
+    # ],
+    alwayslink = True,
+    defines = [
+        "PJRT_PLUGIN_BUILDING_LIBRARY",
+    ],
+    deps = [
+        ":client",
+        "//integrations/pjrt/src/iree_pjrt/common",
+        "//integrations/pjrt/src/iree_pjrt/common:dylib_platform",
+    ],
+)
+
+cc_shared_library(
+    name = "iree_pjrt_cpu_dylib",
+    deps = [
+        ":dylib",
+    ],
+    # dynamic_deps = [
+    #     ":bar_shared",
+    # ],
+    # additional_linker_inputs = [
+    #     ":foo.lds",
+    # ],
+    # user_link_flags = [
+    #     "-Wl,--version-script=$(location :foo.lds)",
+    # ],
+)

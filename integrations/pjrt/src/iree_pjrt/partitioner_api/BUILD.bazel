@@ -1,0 +1,27 @@
+package(
+    default_visibility = ["//visibility:public"],
+    features = ["layering_check"],
+    licenses = ["notice"],  # Apache 2.0
+)
+
+cc_library(
+    name = "partitioner_api",
+    hdrs = [
+        "embedding_api.h",
+        "loader.h"
+    ],
+    includes = [ "../../" ],
+)
+
+cc_library(
+    name = "loader",
+    hdrs = [ "embedding_api.h" ],
+    srcs = [
+        "loader/handle_symbols.inc",
+        "loader/loader.cpp",
+    ],
+    includes = [ "../../" ],
+    deps = [
+        ":partitioner_api"
+    ],
+)

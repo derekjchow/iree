@@ -1,0 +1,11 @@
+package(
+    default_visibility = ["//visibility:public"],
+    features = ["layering_check"],
+    licenses = ["notice"],  # Apache 2.0
+)
+
+cc_library(
+    name = "pjrt_c_api",
+    hdrs = [ "xla/pjrt/c/pjrt_c_api.h" ],
+    includes = [ "." ],
+)
