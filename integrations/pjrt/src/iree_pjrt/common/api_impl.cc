@@ -2162,6 +2162,11 @@ void BindMonomorphicApi(PJRT_Api* api) {
   BindUndefineds(api);
   ErrorInstance::BindApi(api);
 
+  api->PJRT_Plugin_Attributes =
+      +[](PJRT_Plugin_Attributes_Args* args) -> PJRT_Error* {
+        args->num_attributes = 0;
+        return nullptr;
+      };
   api->PJRT_Plugin_Initialize =
       +[](PJRT_Plugin_Initialize_Args* args) -> PJRT_Error* { return nullptr; };
 

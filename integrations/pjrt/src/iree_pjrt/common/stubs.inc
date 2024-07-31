@@ -94,3 +94,7 @@
   _STUB(PJRT_Client_CreateViewOfDeviceBuffer);
   _STUB(PJRT_Executable_Fingerprint);
   _STUB(PJRT_Client_TopologyDescription);
+  _STUB(PJRT_Executable_GetCompiledMemoryStats);
+  _STUB(PJRT_Memory_Kind_Id);
+  _STUB(PJRT_ExecuteContext_Create);
+  _STUB(PJRT_ExecuteContext_Destroy);
